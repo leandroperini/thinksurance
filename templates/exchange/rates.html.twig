@@ -1,0 +1,61 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Listing rates:{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <style>
+        .content {
+            margin: 5% 20% 5% 20%;
+        }
+    </style>
+
+{% endblock %}
+
+{% block body %}
+    {% if error %}
+        <div class="toast d-flex align-items-center mb-3" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-body">
+                An error occurred: "{{ error }}"
+            </div>
+            <button type="button" class="btn-close ms-auto me-2" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    {% endif %}
+    <table class="table table-dark table-striped table-hover table-sm">
+        {% block ratesTableContent %}
+            <thead>
+            <tr>
+                <th scope="col">Currency (Base: {{ base }})</th>
+                <th scope="col">Exchange Rate (Validity: {{ date }})</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for currency, rate in rates %}
+                <tr>
+                    <td>{{ currency }}</td>
+                    <td>{{ rate }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        {% endblock %}
+    </table>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+            crossorigin="anonymous"></script>
+    {% if error %}
+        <script>
+            var toastElList = [].slice.call(document.querySelectorAll('.toast'))
+            var toastList = toastElList.map(function (toastEl) {
+                return new bootstrap.Toast(toastEl)
+            })
+
+            toastList[0].show()
+        </script>
+    {% endif %}
+{% endblock %}

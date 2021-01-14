@@ -1,0 +1,26 @@
+{% extends "exchange/rates.html.twig" %}
+
+{% block ratesTableContent %}
+    <thead>
+    <tr>
+        <th scope="col">Date</th>
+        <th scope="col">Currency (Base: {{ base }} )</th>
+        <th scope="col">Exchange Rate (Validity: {{ date }})</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for date, dateRates in rates %}
+        {% set datePrinted = false %}
+        {% for currency, rate in dateRates %}
+            <tr>
+                {% if datePrinted == false %}
+                    <td class="align-middle" scope="row" rowspan="{{ dateCounts[date] }}">{{ date }}</td>
+                    {% set datePrinted = true %}
+                {% endif %}
+                <td>{{ currency }}</td>
+                <td>{{ rate }}</td>
+            </tr>
+        {% endfor %}
+    {% endfor %}
+    </tbody>
+{% endblock %}
