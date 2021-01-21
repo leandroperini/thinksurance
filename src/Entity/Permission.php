@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity\User;
+namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -19,38 +19,50 @@ class Permission
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=50)
      */
     private $name;
 
     /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $description;
+
+    /**
      * @ORM\ManyToMany(targetEntity=Role::class, mappedBy="Permissions")
      */
-    private $Roles;
+    private Collection $Roles;
 
     /**
      * @ORM\ManyToMany(targetEntity=User::class, mappedBy="Permissions")
      */
-    private $Users;
+    private Collection $Users;
 
-    public function __construct()
-    {
+    public function __construct() {
         $this->Roles = new ArrayCollection();
+        $this->Users = new ArrayCollection();
     }
 
-    public function getId(): ?int
-    {
+    public function getId() : ?int {
         return $this->id;
     }
 
-    public function getName(): ?string
-    {
+    public function getName() : ?string {
         return $this->name;
     }
 
-    public function setName(string $name): self
-    {
+    public function setName(string $name) : self {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getDescription() : ?string {
+        return $this->description;
+    }
+
+    public function setDescription(string $description) : self {
+        $this->description = $description;
 
         return $this;
     }
@@ -58,13 +70,11 @@ class Permission
     /**
      * @return Collection|Role[]
      */
-    public function getRoles(): Collection
-    {
+    public function getRoles() : Collection {
         return $this->Roles;
     }
 
-    public function addRole(Role $Role): self
-    {
+    public function addRole(Role $Role) : self {
         if (!$this->Roles->contains($Role)) {
             $this->Roles[] = $Role;
             $Role->addPermission($this);
@@ -73,8 +83,7 @@ class Permission
         return $this;
     }
 
-    public function removeRole(Role $Role): self
-    {
+    public function removeRole(Role $Role) : self {
         if ($this->Roles->removeElement($Role)) {
             $Role->removePermission($this);
         }
@@ -85,13 +94,11 @@ class Permission
     /**
      * @return Collection|User[]
      */
-    public function getUsers(): Collection
-    {
+    public function getUsers() : Collection {
         return $this->Users;
     }
 
-    public function addUser(User $User): self
-    {
+    public function addUser(User $User) : self {
         if (!$this->Users->contains($User)) {
             $this->Users[] = $User;
             $User->addPermission($this);
@@ -100,8 +107,7 @@ class Permission
         return $this;
     }
 
-    public function removeUser(User $User): self
-    {
+    public function removeUser(User $User) : self {
         if ($this->Users->removeElement($User)) {
             $User->removePermission($this);
         }

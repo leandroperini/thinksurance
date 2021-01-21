@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity\User;
+namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -18,32 +18,35 @@ class User implements UserInterface
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      */
-    private $username;
+    private string $username;
 
 
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
      */
-    private $password;
+    private string $password;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Role::class, mappedBy="users")
+     * @ORM\ManyToMany(targetEntity=Role::class, inversedBy="Users")
      */
-    private $Roles;
+    private Collection $Roles;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Permission::class, mappedBy="users")
+     * @ORM\ManyToMany(targetEntity=Permission::class, inversedBy="Users")
      */
-    private $Permissions = [];
+    private ?Collection $Permissions;
 
     public function __construct() {
         $this->Roles = new ArrayCollection();
+        $baseRole    = new Role();
+        $baseRole->setName('ROLE_USER')->setDescription('Base role.');
+        $this->addRole($baseRole);
         $this->Permissions = new ArrayCollection();
     }
 
@@ -93,9 +96,16 @@ class User implements UserInterface
     }
 
     /**
+     * @return array|Role[]
+     */
+    public function getRoles() : array {
+        return $this->Roles->toArray();
+    }
+
+    /**
      * @return Collection|Role[]
      */
-    public function getRoles() : Collection {
+    public function getRelatedRoles() : Collection {
         return $this->Roles;
     }
 

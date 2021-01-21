@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity\User;
+namespace App\Entity;
 
 use App\Repository\RoleRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -17,27 +17,27 @@ class Role
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id;
 
     /**
      * @ORM\Column(type="string", length=50)
      */
-    private $name;
+    private ?string $name;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $description;
+    private ?string $description;
 
     /**
      * @ORM\ManyToMany(targetEntity=Permission::class, inversedBy="Roles")
      */
-    private $Permissions;
+    private Collection $Permissions;
 
     /**
-     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="Roles")
+     * @ORM\ManyToMany(targetEntity=User::class, mappedBy="Roles")
      */
-    private $Users;
+    private Collection $Users;
 
     public function __construct() {
         $this->Permissions = new ArrayCollection();
