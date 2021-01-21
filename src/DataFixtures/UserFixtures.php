@@ -45,7 +45,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
                 $userData['permissions'][] = $this->getReference(PermissionsFixtures::REFERENCES . $permIdx);
             }
 
-            $User = (new UserFactory($userData))->make();
+            $User = (new UserFactory($userData))->setPasswordEncoder($this->encoder)->make();
             $manager->persist($User);
         }
         $manager->flush();

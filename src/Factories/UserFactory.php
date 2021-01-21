@@ -20,7 +20,7 @@ class UserFactory implements FactoryInterface
         $this->data = $data;
     }
 
-    public function make(array $data = []) : Role {
+    public function make(array $data = []) : User {
         $Obj = new User();
 
         $this->parseProperties(array_merge($this->data, $data))
@@ -33,7 +33,7 @@ class UserFactory implements FactoryInterface
             $Obj->addPermission($Permission);
         }
 
-        $passWd = $this->passwordEncoder->encodePassword($Obj, $this->data['username']);
+        $passWd = $this->passwordEncoder->encodePassword($Obj, $this->data['password']);
         $Obj->setPassword($passWd);
 
         return $Obj;
