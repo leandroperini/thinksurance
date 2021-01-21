@@ -15,10 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ExchangeController extends AbstractController
 {
-    /**
-     * @var \App\Contracts\Exchange\ExchangeServiceInterface
-     */
-    private $ExchangeSrvc;
+    private ExchangeServiceInterface $ExchangeSrvc;
 
     /**
      * ExchangeController constructor.
@@ -31,6 +28,7 @@ class ExchangeController extends AbstractController
 
 
     /**
+     * Gets exchange rates passing a date formatted like so 2021-01-01
      * @Route("/rates/{date<[0-9]{4}(?:-[0-9]{1,2}){2}>?}", name="rates_by_date", stateless=true)
      * @param string $date
      *
@@ -52,6 +50,7 @@ class ExchangeController extends AbstractController
 
 
     /**
+     * Gets the most recent exchange rates
      * @Route("/rates/latest", name="rates_latest", priority=3)
      */
     public function ratesLatest() : Response {
@@ -62,6 +61,7 @@ class ExchangeController extends AbstractController
     }
 
     /**
+     * Reads exchange rates history based on a date range
      * @Route("/rates/history", name="rates_from_history", priority=2, stateless=true)
      */
     public function ratesFromHistory() : Response {
@@ -71,6 +71,17 @@ class ExchangeController extends AbstractController
         return $this->render('exchange/ratesHistory.html.twig', $this->prepareVariablesToRender($rates, $apiType));
     }
 
+    /**
+     * -note: here there is space for improvement as there is a bit of responsibility
+     * overlapping between parsing and deciding which variables will be used
+     * Decides what variables should be present and parses them according with the api chosen
+     *
+     * @param iterable                         $rates
+     * @param \App\Enums\Exchange\RateApiTypes $apiType
+     *
+     * @return array
+     * @throws \Exception
+     */
     private function prepareVariablesToRender(iterable $rates, RateApiTypes $apiType) : array {
         $variables = [
             'rates'      => $rates['rates'] ?? [],
@@ -99,6 +110,12 @@ class ExchangeController extends AbstractController
         return $variables;
     }
 
+    /**
+     * Get the amount of rates there is for each date present in the array
+     * @param iterable $rates
+     *
+     * @return array
+     */
     private function getCurrencyCountPerDay(iterable $rates) {
         $counts = [];
         foreach ($rates as $date => $dateRates) {
@@ -107,6 +124,11 @@ class ExchangeController extends AbstractController
         return $counts;
     }
 
+    /**
+     * -note: this is here to reduce code duplication
+     * Extracts queryString params
+     * @return array
+     */
     private function extractQueryStrings() {
         $request = Request::createFromGlobals();
         return $request->query->all();

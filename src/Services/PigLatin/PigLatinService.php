@@ -40,6 +40,14 @@ class PigLatinService implements ServiceInterface
 
     private array $convertedCache = [];
 
+    /**
+     * Converts string to pigLatin, if the string is already a pigLatin
+     * then it returns the same string
+     *
+     * @param string $word
+     *
+     * @return string
+     */
     public function convert(string $word) : string {
         if ($this->isPigLatin($word)) {
             return $word;
@@ -51,6 +59,14 @@ class PigLatinService implements ServiceInterface
         return $secondPart . $firstPart . 'ay';
     }
 
+    /**
+     * Parser to detect which parts of the string should be considered
+     * for the pigLatin translation
+     *
+     * @param string $word
+     *
+     * @return array|string[]
+     */
     private function detectWordParts(string $word) : array {
         if ($fromCache = $this->getFromCache($word)) {
             return $fromCache;
@@ -59,13 +75,24 @@ class PigLatinService implements ServiceInterface
         $letters  = str_split($word);
         $wordSize = strlen($word);
 
+        /**
+         * -note: here it's a very unusual and handy trick that allows a better readability
+         *       and it's easier to change and grow, it works just like an ifElse:
+         * if($this->isVowel($word[0])){
+         * }elseif(strtolower($word[-1]) == 'y' and $wordSize == 2){
+         * }
+         *
+         *  Skips some very known situations to reduce computational resources usage
+         */
         switch (true) {
+            // when first letter is vowel
             case $this->isVowel($word[0]):
                 return [
                     'y',
                     $word,
                 ];
-            case strtolower($word[-1]) == 'y' and $wordSize == 2:
+            // when the word is something like my and by
+            case $this->isTwoLetterWordEndingWithY($word):
                 return [
                     rtrim($word, 'y'),
                     'y',
@@ -81,6 +108,7 @@ class PigLatinService implements ServiceInterface
             }
 
             if ($this->isVowel($letter)) {
+                // the substr is getting the rest of the letters that came after last consonant
                 $secondPart = substr($word, $index - $wordSize);
                 break;
             }
@@ -92,16 +120,20 @@ class PigLatinService implements ServiceInterface
         ]);
     }
 
+    /**
+     * Checks if the word is a pigLatin of a pigLatin, if this is the case
+     * then the original word was already in pigLatin
+     *
+     * @param string $word
+     *
+     * @return bool
+     */
     public function isPigLatin(string $word) : bool {
         return preg_match('/^[aeiouy][a-z]+(?:ay)(?<!(ayyay))$/i', $word) == 1;
     }
 
     private function isConsonant($letter) : bool {
         return (bool)($this->consonants[strtoupper($letter)] ?? false);
-    }
-
-    private function IsYAVowel(string $letterPrecedingY) {
-        return empty($letterPrecedingY) or $this->isConsonant($letterPrecedingY);
     }
 
     private function isVowel($letter) : bool {
@@ -114,6 +146,10 @@ class PigLatinService implements ServiceInterface
 
     private function setCache($index, $value) {
         return $this->convertedCache[$index] = $value;
+    }
+
+    private function isTwoLetterWordEndingWithY(string $word) {
+        return strtolower($word[-1]) == 'y' and strlen($word) == 2;
     }
 
 }

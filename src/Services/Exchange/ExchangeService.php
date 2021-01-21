@@ -12,17 +12,18 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Psr\Log\LoggerInterface;
 use function Symfony\Component\String\u;
 
+/**
+ * -note: here are some improvements that could be done: better exception handling and log
+ * Class ExchangeService
+ * Is a gateway to consume the public exchange rates API
+ * @package App\Services\Exchange
+ */
 class ExchangeService implements ExchangeServiceInterface
 {
-    /**
-     * @var \Symfony\Contracts\HttpClient\HttpClientInterface
-     */
-    private $httpClient;
 
-    /**
-     * @var \Psr\Log\LoggerInterface
-     */
-    private $logger;
+    private HttpClientInterface $httpClient;
+
+    private LoggerInterface $logger;
 
     /**
      * ExchangeService constructor.

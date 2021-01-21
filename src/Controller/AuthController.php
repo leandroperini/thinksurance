@@ -12,11 +12,13 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 /**
+ * -note: this controller was created to group every authentication routes
  * @Route(name="auth_form_")
  */
 class AuthController extends AbstractController
 {
     /**
+     * Login form
      * @Route("/login", name="login")
      * @param \Symfony\Component\Security\Http\Authentication\AuthenticationUtils $authenticationUtils
      *
@@ -39,6 +41,7 @@ class AuthController extends AbstractController
     }
 
     /**
+     * Logout Action
      * @Route("/logout", name="logout")
      */
     public function logout() : RedirectResponse {
@@ -46,8 +49,13 @@ class AuthController extends AbstractController
     }
 
     /**
+     * -note: there is a separation between the render and the action functions because
+     *       it's better to keep separate domains and responsibilities
+     * Form to register new user.
      * @Route("/register", name="register_render", methods={"GET"})
-     * @param \Symfony\Component\Security\Http\Authentication\AuthenticationUtils $authenticationUtils
+     *
+     * @param \Symfony\Component\HttpFoundation\Request                             $request
+     * @param \Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface $passwordEncoder
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -64,6 +72,7 @@ class AuthController extends AbstractController
     }
 
     /**
+     * Register action
      * @Route("/register", name="register", methods={"POST"})
      * @param \Symfony\Component\HttpFoundation\Request                             $request
      * @param \Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface $passwordEncoder
@@ -72,7 +81,7 @@ class AuthController extends AbstractController
      */
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder) : Response {
         $formData = $request->request;
-        // encode the plain password
+
         if ($formData->get('inputPassword') !== $formData->get('repeatPassword')) {
             return $this->render('security/register.html.twig', [
                 'last_username' => '',
@@ -89,11 +98,7 @@ class AuthController extends AbstractController
         $entityManager->persist($user);
         $entityManager->flush();
 
-
-        // do anything else you need here, like send an email
-        // in this example, we are just redirecting to the homepage
         return $this->redirectToRoute('user_admin');
-
     }
 
 }

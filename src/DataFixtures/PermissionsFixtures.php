@@ -7,6 +7,12 @@ use App\Factories\PermissionFactory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
+/**
+ * Class PermissionsFixtures
+ * seeds the database for tests purposes
+ *
+ * @package App\DataFixtures
+ */
 class PermissionsFixtures extends Fixture
 {
     public const REFERENCES = 'permission_';

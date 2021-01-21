@@ -9,11 +9,15 @@ use Symfony\Component\Routing\Annotation\Route;
 
 
 /**
+ * -note: In all the function present in this class, there is space for improvement when handling exceptions
+ *       and building a failure response
  * @Route("/pig-latin", name="pig_latin_")
  */
 class PigLatinController extends AbstractController
 {
     /**
+     * Analyze the word sent via url param and shows if is pigLatin or not and in case of not
+     * shows how would be the pigLatin version
      * @Route("/{word}", name="analyze", methods={"GET"})
      * @param string                                      $word
      * @param \App\Services\PigLatin\PigLatinService|null $PigLatinService
@@ -34,6 +38,7 @@ class PigLatinController extends AbstractController
     }
 
     /**
+     * Apply the pigLatin rule to the word sent in the url
      * @Route("/convert/{word}", name="convert", methods={"GET"})
      * @param string                                      $word
      * @param \App\Services\PigLatin\PigLatinService|null $PigLatinService
@@ -52,6 +57,7 @@ class PigLatinController extends AbstractController
     }
 
     /**
+     * Checks if the word sent is is pigLatin or not
      * @Route("/check/{word}", name="check", methods={"GET"})
      * @param string                                      $word
      * @param \App\Services\PigLatin\PigLatinService|null $PigLatinService

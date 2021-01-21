@@ -25,6 +25,9 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
             $username = 'user_0001';
             $password = '0001';
 
+            /**
+             * -note: this is here to ensure no username will be repeated
+             */
             while ($usedUsernames[$username] ?? false) {
                 $password = str_pad((string)rand(0, 9999), 4, 0, STR_PAD_LEFT);
                 $username = 'user_' . $password;
@@ -36,11 +39,16 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
                 'username' => $username,
                 'password' => $password,
             ];
-
+            /**
+             * -note: This section randomizes the roles associated with the users, so its always different
+             */
             for ($roleIdx = rand(0, RolesFixtures::LIST_SIZE); $roleIdx < 3; $roleIdx++) {
                 $userData['roles'][] = $this->getReference(RolesFixtures::REFERENCES . $roleIdx);
             }
 
+            /**
+             * -note: This section randomizes the permissions associated with the users, so its always different
+             */
             for ($permIdx = rand(0, PermissionsFixtures::LIST_SIZE); $permIdx < 5; $permIdx++) {
                 $userData['permissions'][] = $this->getReference(PermissionsFixtures::REFERENCES . $permIdx);
             }

@@ -7,6 +7,11 @@ namespace App\Factories;
 use App\Contracts\FactoryInterface;
 use App\Entity\Permission;
 
+/**
+ * -note: this class allows for more control e repeatability keeping quality esier to maintain
+ * Class PermissionFactory
+ * @package App\Factories
+ */
 class PermissionFactory implements FactoryInterface
 {
     private array $data = [];

@@ -96,6 +96,8 @@ class User implements UserInterface, ArrayableInterface
     }
 
     /**
+     * -note: this function converts the list of objects into an array of strings
+     *       to keep compatibility with UserInterface features
      * @return array|string[]
      */
     public function getRoles() : array {
@@ -105,6 +107,8 @@ class User implements UserInterface, ArrayableInterface
     }
 
     /**
+     * -note: this function exists only to keep compatibility with the UserInterface
+     *       and allow access to the list of objects
      * @return Collection|Role[]
      */
     public function getRolesObjectList() : Collection {
@@ -153,6 +157,7 @@ class User implements UserInterface, ArrayableInterface
     }
 
     /**
+     * This ensures that there always will be at least one role in the user.
      * @ORM\PrePersist
      *
      * @param \Doctrine\Persistence\Event\LifecycleEventArgs $args

@@ -8,6 +8,12 @@ use App\Contracts\FactoryInterface;
 use App\Entity\Permission;
 use App\Entity\Role;
 
+/**
+ * -note: this class allows for more control e repeatability keeping quality esier to maintain
+ * Class RoleFactory
+ *
+ * @package App\Factories
+ */
 class RoleFactory implements FactoryInterface
 {
     private array $data = [];

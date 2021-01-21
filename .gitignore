@@ -1,4 +1,3 @@
-
 ###> symfony/framework-bundle ###
 /.env.local
 /.env.local.php
@@ -20,7 +19,6 @@
 !bin/console
 !bin/symfony_requirements
 /vendor/
-
 
 ###> symfony/phpunit-bridge ###
 .phpunit

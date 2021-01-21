@@ -10,6 +10,12 @@ use App\Entity\Role;
 use App\Entity\User;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
+/**
+ * -note: this class allows for more control e repeatability keeping quality esier to maintain
+ * Class UserFactory
+ *
+ * @package App\Factories
+ */
 class UserFactory implements FactoryInterface
 {
     private array $data = [];

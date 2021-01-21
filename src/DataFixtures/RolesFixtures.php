@@ -7,6 +7,11 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
+/**
+ * Class RolesFixtures
+ * seeds the database for tests purposes
+ * @package App\DataFixtures
+ */
 class RolesFixtures extends Fixture implements DependentFixtureInterface
 {
     public const REFERENCES = 'role_';
@@ -32,7 +37,9 @@ class RolesFixtures extends Fixture implements DependentFixtureInterface
                 'description' => $description,
             ];
 
-
+            /**
+             * -note: This section randomizes the permissions associated with the roles, so its always different
+             */
             for ($permIdx = rand(0, PermissionsFixtures::LIST_SIZE); $permIdx < 16; $permIdx++) {
                 $roleData['permissions'][] = $this->getReference(PermissionsFixtures::REFERENCES . $permIdx);
             }

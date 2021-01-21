@@ -9,6 +9,12 @@ use DateTime;
 use Psr\Log\LoggerInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
+/**
+ * -note: This interface mau not make sense now, it's here for a future safeness
+ * Interface ExchangeServiceInterface
+ *
+ * @package App\Contracts\Exchange
+ */
 interface ExchangeServiceInterface extends ServiceInterface
 {
     /**

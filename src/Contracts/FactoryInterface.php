@@ -2,7 +2,12 @@
 
 namespace App\Contracts;
 
-
+/**
+ * As factories tends to grow very fast, this interface will keep the pattern safe and te code more readable
+ * Interface FactoryInterface
+ *
+ * @package App\Contracts
+ */
 interface FactoryInterface
 {
     /**
