@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Contracts\ArrayableInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -9,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass=PermissionRepository::class)
  */
-class Permission
+class Permission implements ArrayableInterface
 {
     /**
      * @ORM\Id
@@ -113,6 +114,14 @@ class Permission
         }
 
         return $this;
+    }
+
+    public function toArray() : array {
+        return [
+            'name'        => $this->getName(),
+            'description' => $this->getDescription(),
+        ];
+
     }
 
 

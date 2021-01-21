@@ -3,13 +3,14 @@
 namespace App\DataFixtures;
 
 use App\Entity\Permission;
+use App\Factories\PermissionFactory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
 class PermissionsFixtures extends Fixture
 {
     public const REFERENCES = 'permission_';
-    public const LIST_SIZE = 16;
+    public const LIST_SIZE  = 16;
 
     public function load(ObjectManager $manager) {
 
@@ -34,11 +35,16 @@ class PermissionsFixtures extends Fixture
 
         $idx = 0;
         foreach ($permissions as $name => $description) {
-            $permission = new Permission();
-            $permission->setName($name)->setDescription($description);
+            $Permission = new Permission();
+            $Permission->setName($name)->setDescription($description);
 
-            $manager->persist($permission);
-            $this->addReference(self::REFERENCES . $idx, $permission);
+            $Permission = (new PermissionFactory([
+                                                     'name'        => $name,
+                                                     'description' => $description,
+                                                 ]))->make();
+
+            $manager->persist($Permission);
+            $this->addReference(self::REFERENCES . $idx, $Permission);
             $idx++;
         }
         $manager->flush();

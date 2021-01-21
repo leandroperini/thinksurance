@@ -2,16 +2,19 @@
 
 namespace App\Entity;
 
+use App\Contracts\ArrayableInterface;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Persistence\Event\LifecycleEventArgs;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @ORM\HasLifecycleCallbacks()
  */
-class User implements UserInterface
+class User implements UserInterface, ArrayableInterface
 {
     /**
      * @ORM\Id
@@ -43,10 +46,7 @@ class User implements UserInterface
     private ?Collection $Permissions;
 
     public function __construct() {
-        $this->Roles = new ArrayCollection();
-        $baseRole    = new Role();
-        $baseRole->setName('ROLE_USER')->setDescription('Base role.');
-        $this->addRole($baseRole);
+        $this->Roles       = new ArrayCollection();
         $this->Permissions = new ArrayCollection();
     }
 
@@ -96,16 +96,18 @@ class User implements UserInterface
     }
 
     /**
-     * @return array|Role[]
+     * @return array|string[]
      */
     public function getRoles() : array {
-        return $this->Roles->toArray();
+        return $this->getRolesObjectList()->map(function (Role $Role) {
+            return $Role->getName();
+        })->toArray();
     }
 
     /**
      * @return Collection|Role[]
      */
-    public function getRelatedRoles() : Collection {
+    public function getRolesObjectList() : Collection {
         return $this->Roles;
     }
 
@@ -130,7 +132,7 @@ class User implements UserInterface
      * @return Collection|Permission[]
      */
     public function getPermissions() : Collection {
-        return $this->Roles;
+        return $this->Permissions;
     }
 
     public function addPermission(Permission $Permission) : self {
@@ -148,5 +150,41 @@ class User implements UserInterface
         }
 
         return $this;
+    }
+
+    /**
+     * @ORM\PrePersist
+     *
+     * @param \Doctrine\Persistence\Event\LifecycleEventArgs $args
+     */
+    public function setDefaultRole(LifecycleEventArgs $args) {
+        if ($this->getRolesObjectList()->isEmpty()) {
+
+            $entityManager = $args->getObjectManager();
+            $baseRole      = $entityManager->getRepository(Role::class)->findOneBy([
+                                                                                       'name' => 'ROLE_USER',
+                                                                                   ]);
+            if ($baseRole === null) {
+                $baseRole = new Role();
+                $baseRole->setName('ROLE_USER')->setDescription('Base role.');
+                $entityManager->persist($baseRole);
+            }
+
+            $this->addRole($baseRole);
+        }
+    }
+
+    public function toArray() : array {
+
+        return [
+            'username'    => $this->getUsername(),
+            'roles'       => $this->getRolesObjectList()->map(function (Role $Role) {
+                return $Role->toArray();
+            })->toArray(),
+            'permissions' => $this->getPermissions()->map(function (Permission $Permission) {
+                return $Permission->toArray();
+            })->toArray(),
+        ];
+
     }
 }

@@ -2,7 +2,7 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\Role;
+use App\Factories\RoleFactory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -10,7 +10,7 @@ use Doctrine\Persistence\ObjectManager;
 class RolesFixtures extends Fixture implements DependentFixtureInterface
 {
     public const REFERENCES = 'role_';
-    public const LIST_SIZE = 7;
+    public const LIST_SIZE  = 7;
 
     public function load(ObjectManager $manager) {
         $manager->flush();
@@ -27,16 +27,19 @@ class RolesFixtures extends Fixture implements DependentFixtureInterface
 
         $idx = 0;
         foreach ($roles as $name => $description) {
+            $roleData = [
+                'name'        => $name,
+                'description' => $description,
+            ];
 
-            $role = new Role();
-            $role->setName($name)->setDescription($description);
 
-            for ($permIdx = rand(); $permIdx < 16; $permIdx++) {
-                $role->addPermission($this->getReference(PERMISSIONS_REFERENCE . $permIdx));
+            for ($permIdx = rand(0, PermissionsFixtures::LIST_SIZE); $permIdx < 16; $permIdx++) {
+                $roleData['permissions'][] = $this->getReference(PermissionsFixtures::REFERENCES . $permIdx);
             }
 
-            $manager->persist($role);
-            $this->addReference(self::REFERENCES . $idx, $role);
+            $Role = (new RoleFactory($roleData))->make();
+            $manager->persist($Role);
+            $this->addReference(self::REFERENCES . $idx, $Role);
             $idx++;
         }
         $manager->flush();

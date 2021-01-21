@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
+use App\Factories\UserFactory;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -71,7 +71,6 @@ class AuthController extends AbstractController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder) : Response {
-        $user     = new User();
         $formData = $request->request;
         // encode the plain password
         if ($formData->get('inputPassword') !== $formData->get('repeatPassword')) {
@@ -80,14 +79,11 @@ class AuthController extends AbstractController
                 'error'         => "Passwords don't match!",
             ]);
         }
-        $user->setUsername($formData->get('username'));
-        $user->setRoles($user->getRoles());
-        $user->setPassword(
-            $passwordEncoder->encodePassword(
-                $user,
-                $formData->get('inputPassword')
-            )
-        );
+
+        $user = (new UserFactory([
+                                     'username' => $formData->get('username'),
+                                     'password' => $formData->get('inputPassword'),
+                                 ]))->setPasswordEncoder($passwordEncoder)->make();
 
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($user);

@@ -2,10 +2,9 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\User;
+use App\Factories\UserFactory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
-use Doctrine\ORM\EntityManager;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -20,33 +19,34 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager) {
         $manager->flush();
 
-        $password = str_pad((string)rand(0, 9999), 4, 0, STR_PAD_LEFT);
-
+        $usedUsernames = [];
         for ($idx = 0; $idx < 50; $idx++) {
-            $user     = new User();
-            $password = $this->encoder->encodePassword($user, $password);
 
-            $user->setUsername('user_' . $password)->setPassword($password);
+            $username = 'user_0001';
+            $password = '0001';
+
+            while ($usedUsernames[$username] ?? false) {
+                $password = str_pad((string)rand(0, 9999), 4, 0, STR_PAD_LEFT);
+                $username = 'user_' . $password;
+            }
+
+            $usedUsernames[$username] = true;
+
+            $userData = [
+                'username' => $username,
+                'password' => $password,
+            ];
 
             for ($roleIdx = rand(0, RolesFixtures::LIST_SIZE); $roleIdx < 3; $roleIdx++) {
-                /**
-                 * @var \App\Entity\Role $role
-                 */
-                $role = $this->getReference(RolesFixtures::REFERENCES . $roleIdx);
-                $manager->persist($role);
-                $user->addRole($role);
+                $userData['roles'][] = $this->getReference(RolesFixtures::REFERENCES . $roleIdx);
             }
-            $manager->persist($user);
 
             for ($permIdx = rand(0, PermissionsFixtures::LIST_SIZE); $permIdx < 5; $permIdx++) {
-                /**
-                 * @var \App\Entity\Permission $permission
-                 */
-                $permission = $this->getReference(PermissionsFixtures::REFERENCES . $permIdx);
-                $user->addPermission($permission);
+                $userData['permissions'][] = $this->getReference(PermissionsFixtures::REFERENCES . $permIdx);
             }
 
-            $manager->persist($user);
+            $User = (new UserFactory($userData))->make();
+            $manager->persist($User);
         }
         $manager->flush();
     }
