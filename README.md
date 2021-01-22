@@ -70,7 +70,7 @@ All the endpoints available at this section follows the rules and accepts the pa
 
 #### <a id="get_latest"></a>Get latest
 
-> [http://thinksurance.local:8080/exchange/rates/local](http://thinksurance.local:8080/exchange/rates/local)
+> [http://thinksurance.local:8080/exchange/rates/latest](http://thinksurance.local:8080/exchange/rates/latest)
 
 #### <a id="get_by_date"></a>Get by date
 
@@ -104,7 +104,7 @@ This will translate the word `example` is in PigLatin
 This will analyze and return all information about the word `example` related to PigLatin such as if it is or not in
 PigLatin and in case of not it's translation.
 
-> [http://thinksurance.local:8080/pig-latin/analyse/example](http://thinksurance.local:8080/pig-latin/analyse/example)
+> [http://thinksurance.local:8080/pig-latin/example](http://thinksurance.local:8080/pig-latin/example)
 
 ---
 
@@ -146,7 +146,7 @@ This project was made using Symfony to better show some coding habilites that co
 
 I would like that I've had more time to make more tests to show up some mocking in action. It would also have been nice if I've used some AWS integrations such as DynamoDB for NoSQL, Python lambdas for the PigLatin portion, and using some cache such Redis.
 
-There is also a huge space for improvement security-wise, specially about the credentials on Docker and env files.
+There is also a huge space for improvement security-wise, specially about the credentials on Docker and env files. The exception handling could also be more implemented and wide.
 
 This project's UX is poor, I would have made different if there were more time in my day to focus on this project.
 

@@ -29,7 +29,7 @@ class ExchangeController extends AbstractController
 
     /**
      * Gets exchange rates passing a date formatted like so 2021-01-01
-     * @Route("/rates/{date<[0-9]{4}(?:-[0-9]{1,2}){2}>?}", name="rates_by_date", stateless=true)
+     * @Route("/rates/{date<[0-9]{4}(?:-[0-9]{1,2}){2}>?}", name="rates_by_date")
      * @param string $date
      *
      * @return \Symfony\Component\HttpFoundation\Response
@@ -62,7 +62,7 @@ class ExchangeController extends AbstractController
 
     /**
      * Reads exchange rates history based on a date range
-     * @Route("/rates/history", name="rates_from_history", priority=2, stateless=true)
+     * @Route("/rates/history", name="rates_from_history", priority=2)
      */
     public function ratesFromHistory() : Response {
         $params  = $this->extractQueryStrings();
