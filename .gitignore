@@ -18,6 +18,7 @@
 /bin/*
 !bin/console
 !bin/symfony_requirements
+!bin/phpunit
 /vendor/
 
 ###> symfony/phpunit-bridge ###

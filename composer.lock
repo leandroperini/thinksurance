@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "38a06a0db66dd5f678a2c9b51a97fd07",
+    "content-hash": "2f4fad674c7c04ee96453b6972cd0df9",
     "packages": [
         {
             "name": "composer/package-versions-deprecated",
@@ -325,16 +325,16 @@
         },
         {
             "name": "doctrine/common",
-            "version": "3.1.0",
+            "version": "3.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/common.git",
-                "reference": "9f3e3f3cc5399604c0325d5ffa92609d694d950d"
+                "reference": "2afde5a9844126bc311cd5f548b5475e75f800d3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/common/zipball/9f3e3f3cc5399604c0325d5ffa92609d694d950d",
-                "reference": "9f3e3f3cc5399604c0325d5ffa92609d694d950d",
+                "url": "https://api.github.com/repos/doctrine/common/zipball/2afde5a9844126bc311cd5f548b5475e75f800d3",
+                "reference": "2afde5a9844126bc311cd5f548b5475e75f800d3",
                 "shasum": ""
             },
             "require": {
@@ -394,7 +394,7 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/common/issues",
-                "source": "https://github.com/doctrine/common/tree/3.1.0"
+                "source": "https://github.com/doctrine/common/tree/3.1.1"
             },
             "funding": [
                 {
@@ -410,7 +410,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-12-03T21:02:31+00:00"
+            "time": "2021-01-20T19:58:05+00:00"
         },
         {
             "name": "doctrine/dbal",
@@ -1401,40 +1401,41 @@
         },
         {
             "name": "elao/enum",
-            "version": "v1.12.2",
+            "version": "v1.13.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Elao/PhpEnums.git",
-                "reference": "49cece6ef58c3e88e1acf03e1b52716e17bd1aab"
+                "reference": "f7badd1fc3a7d9cf90849d79552d4e23896555a0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Elao/PhpEnums/zipball/49cece6ef58c3e88e1acf03e1b52716e17bd1aab",
-                "reference": "49cece6ef58c3e88e1acf03e1b52716e17bd1aab",
+                "url": "https://api.github.com/repos/Elao/PhpEnums/zipball/f7badd1fc3a7d9cf90849d79552d4e23896555a0",
+                "reference": "f7badd1fc3a7d9cf90849d79552d4e23896555a0",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.0"
+                "php": ">=7.3"
             },
             "require-dev": {
                 "api-platform/core": "^2.5.1",
                 "doctrine/data-fixtures": "^1.2",
-                "doctrine/doctrine-bundle": "^1.4|^2.0",
+                "doctrine/doctrine-bundle": "^1.12|^2.0",
                 "doctrine/orm": "^2.4",
                 "friendsofphp/php-cs-fixer": "^2.12.0",
                 "nelmio/alice": "^3.0",
                 "phpspec/prophecy": "~1.0",
-                "symfony/browser-kit": "^3.4|^4.4|^5.0",
-                "symfony/console": "^3.4|^4.4|^5.0",
-                "symfony/css-selector": "^3.4|^4.4|^5.0",
-                "symfony/form": "^3.4|^4.4|^5.0",
-                "symfony/framework-bundle": "^3.4|^4.4|^5.0",
-                "symfony/phpunit-bridge": "^3.4|^4.4|^5.0",
-                "symfony/serializer": "^3.4|^4.4|^5.0",
-                "symfony/translation": "^3.4|^4.4|^5.0",
-                "symfony/twig-bundle": "^3.4|^4.4|^5.0",
-                "symfony/validator": "^3.4|^4.4|^5.0",
-                "symfony/yaml": "^3.4|^4.4|^5.0"
+                "symfony/browser-kit": "^4.4|^5.1",
+                "symfony/console": "^4.4|^5.1",
+                "symfony/css-selector": "^4.4|^5.1",
+                "symfony/form": "^4.4|^5.1",
+                "symfony/framework-bundle": "^4.4|^5.1",
+                "symfony/phpunit-bridge": "^5.1",
+                "symfony/serializer": "^4.4|^5.1",
+                "symfony/translation": "^4.4|^5.1",
+                "symfony/twig-bundle": "^4.4|^5.1",
+                "symfony/validator": "^4.4|^5.1",
+                "symfony/yaml": "^4.4|^5.1",
+                "twig/twig": "^2.12|^3.0"
             },
             "bin": [
                 "bin/elao-enum-dump-js"
@@ -1477,7 +1478,7 @@
             ],
             "support": {
                 "issues": "https://github.com/Elao/PhpEnums/issues",
-                "source": "https://github.com/Elao/PhpEnums/tree/v1.12.2"
+                "source": "https://github.com/Elao/PhpEnums/tree/v1.13.0"
             },
             "funding": [
                 {
@@ -1485,7 +1486,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-11-11T09:01:22+00:00"
+            "time": "2020-12-10T14:42:10+00:00"
         },
         {
             "name": "friendsofphp/proxy-manager-lts",

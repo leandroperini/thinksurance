@@ -5,8 +5,11 @@ services:
       context: .
       dockerfile: docker/php/Dockerfile
     working_dir: /var/www/thinksurance
+    ports:
+      - "9000:9000"
     volumes:
       - ./:/var/www/thinksurance
+      - ./docker/php/php.ini:/usr/local/etc/php/php.ini
       - ./var/log/thinksurance:/var/log/thinksurance
     links:
       - mysql
