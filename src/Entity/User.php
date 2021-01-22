@@ -101,7 +101,7 @@ class User implements UserInterface, ArrayableInterface
      * @return array|string[]
      */
     public function getRoles() : array {
-        return $this->getRolesObjectList()->map(function (Role $Role) {
+        return $this->getRolesObjectList()->map(static function (Role $Role) {
             return $Role->getName();
         })->toArray();
     }
@@ -183,10 +183,10 @@ class User implements UserInterface, ArrayableInterface
 
         return [
             'username'    => $this->getUsername(),
-            'roles'       => $this->getRolesObjectList()->map(function (Role $Role) {
+            'roles'       => $this->getRolesObjectList()->map(static function (Role $Role) {
                 return $Role->toArray();
             })->toArray(),
-            'permissions' => $this->getPermissions()->map(function (Permission $Permission) {
+            'permissions' => $this->getPermissions()->map(static function (Permission $Permission) {
                 return $Permission->toArray();
             })->toArray(),
         ];

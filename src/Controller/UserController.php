@@ -33,4 +33,17 @@ class UserController extends AbstractController
                                'authorizationData' => $userData->toArray(),
                            ]);
     }
+
+    /**
+     * Allows to list every username in the database, for test purposes
+     * @Route("/list", name="list")
+     * @param \App\Repository\UserRepository $userRepository
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function listAvailableUsers(UserRepository $userRepository) : Response {
+        return $this->json(array_map(static function ($User){
+            return $User->getUsername();
+        }, $userRepository->findAll()));
+    }
 }

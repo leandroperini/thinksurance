@@ -115,7 +115,7 @@ class Role implements ArrayableInterface
         return [
             'name'        => $this->getName(),
             'description' => $this->getDescription(),
-            'permissions' => $this->getPermissions()->map(function (Permission $Permission) {
+            'permissions' => $this->getPermissions()->map(static function (Permission $Permission) {
                 return $Permission->toArray();
             })->toArray(),
         ];
