@@ -97,7 +97,7 @@ This will check if the word `example` is in PigLatin
 
 This will translate the word `example` is in PigLatin
 
-> [http://thinksurance.local:8080/pig-latin/check/example](http://thinksurance.local:8080/pig-latin/check/example)
+> [http://thinksurance.local:8080/pig-latin/convert/example](http://thinksurance.local:8080/pig-latin/convert/example)
 
 #### <a id="analyze_the_word"></a>Analyze the word in relation to PigLatin
 
