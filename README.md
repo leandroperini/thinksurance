@@ -41,7 +41,7 @@ If all prerequisites are addressed, go to the git clone destination and run:
     docker-compose up -d
 ```
 
-After Docker is done creating the containers that's required to download all dependencies, setup the database and create
+After Docker is done creating the containers, that's required to download all dependencies, setup the database and create
 the dummy data.
 
 ```
@@ -95,14 +95,14 @@ This will check if the word `example` is in PigLatin
 
 #### <a id="translate_the_word"></a>Translate the word to PigLatin
 
-This will translate the word `example` is in PigLatin
+This will translate the word `example` to PigLatin
 
 > [http://thinksurance.local:8080/pig-latin/convert/example](http://thinksurance.local:8080/pig-latin/convert/example)
 
 #### <a id="analyze_the_word"></a>Analyze the word in relation to PigLatin
 
 This will analyze and return all information about the word `example` related to PigLatin such as if it is or not in
-PigLatin and in case of not it's translation.
+PigLatin and in case of not, it's translation.
 
 > [http://thinksurance.local:8080/pig-latin/example](http://thinksurance.local:8080/pig-latin/example)
 
